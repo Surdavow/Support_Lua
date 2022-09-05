@@ -6,7 +6,7 @@ function strToTable(s)
     local tuple = {}
     local i = 1
     for w in string.gmatch(s, "%S+") do
-        tuple[i] = tonumber(w)
+        tuple[i] = w
         i = i + 1
     end
     return tuple
