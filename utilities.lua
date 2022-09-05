@@ -12,6 +12,26 @@ function strToTable(s)
     return tuple
 end
 
+--Important to remember, Lua indexing starts at 1, as opposed to TorqueScript and most other languages starting at 0.
+function getWord(s, w)
+    return strToTable(s)[w]
+end
+
+function getWords(s, min, max)
+    local table = strToTable(s)
+    local string = ''
+    for i = 1, #table, 1 do
+        if i >= min and i <= max then
+            if string == '' then
+                string = table[i]
+            else
+                string = string ..' '.. table[i]
+            end
+        end
+    end
+    return string
+end
+
 function VectorAdd(str_one, str_two)
     local a = strToTable(str_one)
     local b = strToTable(str_two)
