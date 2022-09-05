@@ -1,6 +1,6 @@
 # Support_Lua
- Lua utilities for Blockland
+Blockland Lua support from Redo's bllua3 dll
 
 # Requirements
-Redo's lua dll https://gitlab.com/Redo0/bllua3/-/releases
-RedBlocklandLoader https://gitlab.com/Eagle517/redblocklandloader/-/releases
+https://gitlab.com/Redo0/bllua3/-/releases
+https://gitlab.com/Eagle517/redblocklandloader/-/releases
