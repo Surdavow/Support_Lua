@@ -95,11 +95,30 @@ end
 function ts.raycast(pos1, pos2, mask, ignore) return ts.call("containerRayCast",pos1,pos2,mask,ignore) end
 
 ts.mask = {
-	brick = tonumber(ts.get("TypeMasks::FxBrickObjectType")),
+	all = tonumber(ts.get("TypeMasks::All")),
+	camera = tonumber(ts.get("TypeMasks::CameraObjectType")),
+	corpse = tonumber(ts.get("TypeMasks::CorpseObjectType")),
+	damagableItem = tonumber(ts.get("TypeMasks::DamagableItemObjectType")),
+	debris = tonumber(ts.get("TypeMasks::DebrisObjectType")),
+	environment = tonumber(ts.get("TypeMasks::EnvironmentObjectType")),
+	explosion = tonumber(ts.get("TypeMasks::ExplosionObjectType")),
 	brickAlways = tonumber(ts.get("TypeMasks::FxBrickAlwaysObjectType")),
+	brick = tonumber(ts.get("TypeMasks::FxBrickObjectType")),
+	gameBase = tonumber(ts.get("TypeMasks::GameBaseObjectType")),
+	item = tonumber(ts.get("TypeMasks::ItemObjectType")),
+	marker = tonumber(ts.get("TypeMasks::MarkerObjectType")),
+	zone = tonumber(ts.get("TypeMasks::PhysicalZoneObjectType")),
 	player = tonumber(ts.get("TypeMasks::PlayerObjectType")),
-	terrain = tonumber(ts.get("TypeMasks::TerrainObjectType")),
+	projectile = tonumber(ts.get("TypeMasks::ProjectileObjectType")),
+	shapeBase = tonumber(ts.get("TypeMasks::ShapeBaseObjectType")),
 	static = tonumber(ts.get("TypeMasks::StaticObjectType")),
+	staticRendered = tonumber(ts.get("TypeMasks::StaticRenderedObjectType")),
+	staticShape = tonumber(ts.get("TypeMasks::StaticShapeObjectType")),
+	staticTS = tonumber(ts.get("TypeMasks::StaticTSObjectType")),
+	terrain = tonumber(ts.get("TypeMasks::TerrainObjectType")),
+	trigger = tonumber(ts.get("TypeMasks::TriggerObjectType")),
+	vehicleBlocker = tonumber(ts.get("TypeMasks::VehicleBlockerObjectType")),
 	vehicle = tonumber(ts.get("TypeMasks::VehicleObjectType")),
+	water = tonumber(ts.get("TypeMasks::WaterObjectType")),
 }
 ts.mask.general = ts.mask.brick + ts.mask.terrain + ts.mask.static + ts.mask.vehicle + ts.mask.player
