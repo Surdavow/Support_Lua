@@ -9,6 +9,22 @@ function ts.isObject(obj)
 	end
 end
 
+function ts.sched(time, obj, func, ...)
+    ts.call("schedule", time, obj, func, ...)
+end
+
+function ts.schedNoQuota(time, obj, func, ...)
+    ts.call("scheduleNoQuota", time, obj, func, ...)
+end
+
+function ts.objSched(obj, time, func, ...)
+    ts.callobj(obj, "schedule", time, func, ...)
+end
+
+function ts.objSchedNoQuota(obj, time, func, ...)
+    ts.callobj(obj, "scheduleNoQuota", time, func, ...)
+end
+
 function ts.getState(obj)
 	if ts.isObject(obj) then return ts.callobj(obj,"getState") end
 end
