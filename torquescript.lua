@@ -21,6 +21,10 @@ function ts.talk(string)
 	return ts.call("talk",string)
 end
 
+function ts.getcallobj(obj,var)
+	return ts.call("GetCallObject",obj,var)
+end
+
 function ts.delete(obj)
 	if ts.isObject(obj) then ts.callobj(obj, "delete") end
 end
