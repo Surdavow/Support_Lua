@@ -1,10 +1,10 @@
-ts.eval("function LuaProjecitle(%pos,%datablock) {%p = new projectile() {datablock= %datablock; initialPosition = %pos;}; %p.explode();}")
-ts.eval("function GetCallObject(%obj,%var){eval(\"return \" @ %obj @ \".\" @ %var @ \";\");}")
+ts.eval("function luaprojecitle(%pos,%datablock) {%p = new projectile() {datablock= %datablock; initialposition = %pos;}; %p.explode();}")
+ts.eval("function getcallobject(%obj,%var){eval(\"return \" @ %obj @ \".\" @ %var @ \";\");}")
 	
-function ts.getPosition(obj) return vector(ts.callobj(obj, "getPosition")) end
+function ts.getposition(obj) return ts.callobj(obj, "getposition") end
 
-function ts.isObject(obj)
-	if ts.call("isObject", obj) == "1" then return true
+function ts.isobject(obj)
+	if ts.call("isobject", obj) == "1" then return true
 		else return false
 	end
 end
@@ -13,101 +13,99 @@ function ts.sched(time, obj, func, ...)
     ts.call("schedule", time, obj, func, ...)
 end
 
-function ts.schedNoQuota(time, obj, func, ...)
-    ts.call("scheduleNoQuota", time, obj, func, ...)
+function ts.schednoquota(time, obj, func, ...)
+    ts.call("schedulenoquota", time, obj, func, ...)
 end
 
-function ts.objSched(obj, time, func, ...)
+function ts.objsched(obj, time, func, ...)
     ts.callobj(obj, "schedule", time, func, ...)
 end
 
-function ts.objSchedNoQuota(obj, time, func, ...)
-    ts.callobj(obj, "scheduleNoQuota", time, func, ...)
+function ts.objschednoquota(obj, time, func, ...)
+    ts.callobj(obj, "schedulenoquota", time, func, ...)
 end
 
-function ts.getState(obj)
-	if ts.isObject(obj) then return ts.callobj(obj,"getState") end
+function ts.getstate(obj)
+	if ts.isobject(obj) then return ts.callobj(obj,"getstate") end
 end
 
-function ts.getClassName(obj)
-	if ts.isObject(obj) then return ts.callobj(obj,"getClassName") end
+function ts.getclassname(obj)
+	if ts.isobject(obj) then return ts.callobj(obj,"getclassname") end
 end
 
-function ts.talk(string)
-	return ts.call("talk",string)
-end
+function ts.talk(string) return ts.call("talk",string) end
 
 function ts.getcallobj(obj,var)
-	return ts.call("GetCallObject",obj,var)
+	return ts.call("getcallobject",obj,var)
 end
 
 function ts.delete(obj)
-	if ts.isObject(obj) then ts.callobj(obj, "delete") end
+	if ts.isobject(obj) then ts.callobj(obj, "delete") end
 end
 
-function ts.getSimTime()
-	return tonumber(ts.call("getSimTime"))
+function ts.getsimtime()
+	return tonumber(ts.call("getsimtime"))
 end
 
-function ts.allBricks()
-	local mbg = "MainBrickGroup"
-	local mbgc = tonumber(ts.callobj(mbg, "getCount"))
+function ts.allbricks()
+	local mbg = "mainbrickgroup"
+	local mbgc = tonumber(ts.callobj(mbg, "getcount"))
 	local bgi = 0
-	local bg = ts.callobj(mbg, "getObject", bgi)
-	local bgc = tonumber(ts.callobj(bg, "getCount"))
+	local bg = ts.callobj(mbg, "getobject", bgi)
+	local bgc = tonumber(ts.callobj(bg, "getcount"))
 	local bricki = 0
 	return function()
 		if bricki >= bgc then
 			repeat
 				bgi = bgi + 1
 				if bgi >= mbgc then return nil end
-				bg = ts.callobj(mbg, "getObject", bgi)
-				bgc = tonumber(ts.callobj(bg, "getCount"))
+				bg = ts.callobj(mbg, "getobject", bgi)
+				bgc = tonumber(ts.callobj(bg, "getcount"))
 				bricki = 0
 			until (bgc>0)
 		end
-		local brick = ts.callobj(bg, "getObject", bricki)
+		local brick = ts.callobj(bg, "getobject", bricki)
 		bricki = bricki + 1
 		return tonumber(brick)
 	end
 end
-function ts.getBricksByName(searchName, regex)
-	searchName = searchName:lower()
-	local namedBricks = {}
-	for brick in ts.allBricks() do
-		local name = ts.callobj(brick, "getName"):lower()
+function ts.getbricksbyname(searchname, regex)
+	searchname = searchname:lower()
+	local namedbricks = {}
+	for brick in ts.allbricks() do
+		local name = ts.callobj(brick, "getname"):lower()
 		if (name ~= "") then
 			name = name:gsub("^_", "")
 			if
-				((not regex) and name == searchName   ) or
-				( regex      and name:find(searchName))
+				((not regex) and name == searchname   ) or
+				( regex      and name:find(searchname))
 			then
-				table.insert(namedBricks, tonumber(brick))
+				table.insert(namedbricks, tonumber(brick))
 			end
 		end
 	end
-	return namedBricks
+	return namedbricks
 end
 
-function ts.allClients()
-	local cg = "ClientGroup"
-	local cgc = tonumber(ts.callobj(cg, "getCount"))
+function ts.allclients()
+	local cg = "clientgroup"
+	local cgc = tonumber(ts.callobj(cg, "getcount"))
 	local ci = 0
 	return function()
 		if ci >= cgc then return nil end
-		local client = ts.callobj(cg, "getObject", ci)
+		local client = ts.callobj(cg, "getobject", ci)
 		ci = ci + 1
 		return tonumber(client)
 	end
 end
-function ts.allPlayers()
-	local ac = ts.allClients()
+function ts.allplayers()
+	local ac = ts.allclients()
 	return function()
 		repeat
 			local client = ac()
 			if client==nil then return nil end
 			player = tonumber(ts.getobj(client, "player"))
-		until (ts.isObject(player))
+		until (ts.isobject(player))
 		return tonumber(player)
 	end
 end
